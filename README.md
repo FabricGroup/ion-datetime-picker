@@ -1,22 +1,10 @@
-# ion-datetime-picker
-![GitHub version](https://img.shields.io/github/release/katemihalikova/ion-datetime-picker.svg?style=flat-square)
-![Bower version](https://img.shields.io/bower/v/ion-datetime-picker.svg?style=flat-square)
-![Ionic version](https://img.shields.io/badge/ionic-%5E1.0.0--beta.9-yellow.svg?style=flat-square)
-![License](https://img.shields.io/github/license/katemihalikova/ion-datetime-picker.svg?style=flat-square)
-<br>
-![GitHub issues](https://img.shields.io/github/issues/katemihalikova/ion-datetime-picker.svg?style=flat-square)
-![GitHub issue stats](http://issuestats.com/github/katemihalikova/ion-datetime-picker/badge/issue?style=flat-square)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/katemihalikova/ion-datetime-picker.svg?style=flat-square)
-![Github pull request stats](http://issuestats.com/github/katemihalikova/ion-datetime-picker/badge/pr?style=flat-square)
-![GitHub contributors](https://img.shields.io/github/contributors/katemihalikova/ion-datetime-picker.svg?style=flat-square)
+# ion-datetime-picker-fabric
 
-> Date and/or time picker for awesome [Ionic framework](http://ionicframework.com/) v1
-
+The oraginal use please refer below URL:
+[ion-datetime-picker](https://github.com/katemihalikova/ion-datetime-picker)
 # Introduction
 
-I made this component because of poor implementation of native datetime picker in Android webview. How funny it was when I discovered that I can only pick a time between 0:00 and 11:59 on my 24-hour clock phone :)
-
-*Looking for a [picker](http://blog.ionic.io/ionic-2-fixing-date-inputs-for-the-mobile-web/) that works with Ionic framework v2?*
+This is the forked one and enhance some paticular funcitons we used.
 
 # Features
 
@@ -29,23 +17,23 @@ The ion-datetime-picker component has these features:
 - Configure i18n to get weekdays and months in your language
 - Configure size of a step
 
-# Demo
+# Features - New
 
-Demo app is available - enter code `8d75a0ec` into [Ionic View](http://view.ionic.io/).
-Live demo is available on [Codepen](http://codepen.io/katemihalikova/full/dYvjzP/).
 
-#Screenshots
+1. Add time period selection to support customize time list.
+2. Add day of week restriction to enable/disable the day you want.
 
-<img src="/../screenshots/date.png?raw=true" alt="Date picker" width="239">
-<img src="/../screenshots/time.png?raw=true" alt="Time picker" width="239">
-<img src="/../screenshots/datetime.png?raw=true" alt="Datetime picker" width="239">
+   Disable all Saturdays
+3. Add days restriction to enable/disable the days you want.
+   Disable paticular days.
+
 
 # Installation
 
 1. Use bower to install the new module:
 
     ```bash
-    bower install ion-datetime-picker --save
+    bower install "https://github.com/FabricGroup/ion-datetime-picker.git#master" --save
     ```
 
 2. Import the `ion-datetime-picker` javascript and css file into your HTML file (or use [wiredep](https://github.com/taptapship/wiredep)):
@@ -117,8 +105,72 @@ only-valid="{'after': '2016-04-09'}"
 only-valid="{'after': 'today', 'inclusive': true}"
 only-valid="{'outside': {'initial': '2016-04-09', 'final': '2016-06-15'}, 'inclusive': true}"
 ```
-
 Types supported: `'after'`, `'before'`, `'between'` and `'outside'`. If you want to include the day specified, set `'inclusive'` property to `true`.
+
+### `operation` attribute
+
+Disable/Enable calendar times according to specified time range format
+
+```html
+	operation = [{'ClosingAt':'17:00:00','OpeningAt':'09:00:00','DaysOfWeek':'Monday','isClosed':''},
+                                      {'ClosingAt':'17:00:00','OpeningAt':'09:00:00','DaysOfWeek':'Tuesday','isClosed':''}]
+```
+
+### `timePeriod` attribute
+
+Disable/Enable calendar days according to specified data range format
+```html
+	period = {'from':'','to':''}
+```
+
+### `callback` attribute
+
+Enable callback function to specified paticular function.
+
+
+### `available-days` attribute
+
+Disable/Enable calendar days according to specified days
+```html
+	available-days = [
+        {
+            "date": "2016-10-27",
+            "times": [
+                "07:00",
+                "07:15",
+                "07:30",
+                "07:45",
+                "08:00",
+                "08:15",
+                "08:30",
+                "08:45",
+                "09:00",
+                "09:15",
+                "09:30",
+                "09:45",
+                "10:00",
+                "10:15",
+                "10:30",
+                "10:45",
+                "11:00",
+                "11:15",
+                "11:30",
+                "11:45",
+                "12:00",
+                "12:15",
+                "12:30",
+                "12:45",
+                "13:00",
+                "13:15",
+                "13:30",
+                "13:45",
+                "14:00",
+                "14:15",
+                "14:30",
+                "14:45"
+            ]
+        }]
+```
 
 ## Internationalization & customization factory
 
@@ -155,3 +207,44 @@ angular.module("myApp")
 ## Daylight saving time
 
 The datetime picker is using `Date` object with your browser's timezone, including any DST. When you change the date, hour, minute, or second, which sets the time to an invalid value because of moving from 2:00 to 3:00 at the beginning of DST, the time is automatically adjusted to a valid value. On the other hand, when the DST ends, I do NOT take the inserted hour into consideration, but this may be fixed in the future.
+
+
+## Demo Instance
+####For request:
+
+```
+<label class="item item-input item-select item-icon mandatory"
+    ng-model=""
+    ion-datetime-picker date
+    operation="[
+    {'ClosingAt':'17:00:00','OpeningAt':'09:00:00','DaysOfWeek':'Wednesday','isClosed':''},
+    {'ClosingAt':'17:00:00','OpeningAt':'09:00:00','DaysOfWeek':'Saturday','isClosed':''},
+    {'ClosingAt':'17:00:00','OpeningAt':'09:00:00','DaysOfWeek':'Tuesday','isClosed':''}]"
+    period = "{'from':'2016-10-10','to':'2016-11-20'}"
+    callback = "">
+    </label>
+ ```
+####For book:
+
+```
+<label
+    ng-model="dropDate"
+    class="item item-input item-select item-icon mandatory"
+    ion-datetime-picker date
+    available-days = "[
+        {
+            'date': '2016-10-27',
+            'times': [
+                '07:00',
+                '07:15'
+            ]
+        },{
+            'date': '2016-11-03',
+            'times': [
+                '07:00',
+                '07:15'
+            ]
+        }]"
+    callback = "">
+    </label>
+```

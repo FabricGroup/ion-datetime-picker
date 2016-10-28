@@ -9,9 +9,14 @@
             </div>
         </label>
         <label class="col year-input">
-            <div class="item item-input">
+            <div class="item item-input" ng-show="!timePeriodEnabled">
                 <div>
                     <input type="number" ng-model="bind.year" min="1900" max="2999" ng-change="change('year')" ng-blur="changed()" required>
+                </div>
+            </div>
+            <div class="item item-input time-period" ng-show="timePeriodEnabled">
+                <div>
+                    <label>{{bind.year}}</label>
                 </div>
             </div>
         </label>
@@ -34,7 +39,15 @@
             </div>
         </div>
     </div>
-
+    <div ng-if="timePeriodEnabled">
+      <label class="item item-input item-select item-icon">
+          <i class="fa fa-calendar placeholder-icon"></i>
+          <select name="setDropOffTime" class="inlineIcon" ng-model="selectedTime.value" ng-change="selectTime()">
+              <option value="" selected>{{optionPhrase}}</option>
+              <option ng-repeat="value in times" ng-selected="value === selectedTime.value" value="{{value}}">{{value}}</option>
+          </select>
+      </label>
+    </div>
     <div ng-if-start="timeEnabled" class="row time-buttons">
         <div class="col"></div>
         <div class="col-20"><button type="button" class="button button-positive button-clear icon ion-chevron-up" ng-click="changeBy(+hourStep, 'hour')"></button></div>
@@ -46,6 +59,7 @@
         <div ng-if-end class="col-20"><button type="button" class="button button-positive button-clear icon ion-chevron-up" ng-click="changeBy(+12, 'hour')"></button></div>
         <div class="col"></div>
     </div>
+
     <div class="row time">
         <div class="col"></div>
         <label class="col col-20">
